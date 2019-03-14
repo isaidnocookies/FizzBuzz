@@ -20,18 +20,18 @@ fizzBuzz:
   jg finishFizzBuzz
 
   mov edx, 0
-  mov eax, rdi
-  imul 15
+  mov rax, rdi
+  idiv 15
   cmp edx, 0
   je  printFizzBuzz
 
-  mov eax, rdi
-  imul 3
+  mov rax, rdi
+  idiv 3
   cmp edx, 0
   je printFizz
 
-  mov eax, rdi
-  imul 5
+  mov rax, rdi
+  idiv 5
   cmp edx, 0
   je printBuzz
 
