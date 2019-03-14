@@ -1,47 +1,70 @@
-; x86
-
 section .text
 
     global _start
 
 _start:
 
-  mov rdi, -50
-  mov rdx, 50
+  mov rdi, 3
+  neg rdi
+
+  mov rsi, 0
+
   call fizzBuzz
 
-  mov     ebx,0                 ; exit code - successful
-  mov     eax,1                 ; sys_exit
+  mov     rbx,0                 ; exit code - successful
+  mov     rax,1                 ; sys_exit
   int     0x80
 
-
 fizzBuzz:
-  cmp rdi, rdx
+  cmp rdi, rsi
   jg finishFizzBuzz
 
-  mov edx, 0
+  cmp rdi, 0
+  je printIndex
+
+  ; Print FizzBuzz
+  mov rdx, 0
   mov rax, rdi
-  idiv 15
-  cmp edx, 0
+  mov rbx, 15
+  idiv rbx
+  cmp rdx, 0
   je  printFizzBuzz
 
+  ; Print Fizz
+  mov rdx, 0
   mov rax, rdi
-  idiv 3
-  cmp edx, 0
+  mov rbx, 3
+  idiv rbx
+  cmp rdx, 0
   je printFizz
 
+  ; Print Buzz
+  mov rdx, 0
   mov rax, rdi
-  idiv 5
-  cmp edx, 0
+  mov rbx, 5
+  idiv rbx
+  cmp rdx, 0
   je printBuzz
 
-  jmp fizzBuzzLoopEnd
+  jmp printIndex
 
 fizzBuzzLoopEnd:
   inc rdi
   jmp fizzBuzz
+
 finishFizzBuzz:
   ret
+
+printIndex:
+  mov     rdx,mynumLength    
+  mov     rcx,mynum          
+  mov     rbx,1                 ; file handle (stdout)
+  mov     rax,4                 ; sys_write
+  int     0x80
+  jmp fizzBuzzLoopEnd
+
+
+
 
 printFizzBuzz:
   mov     edx,fizzbuzzLength    
@@ -49,17 +72,19 @@ printFizzBuzz:
   mov     ebx,1                 ; file handle (stdout)
   mov     eax,4                 ; sys_write
   int     0x80
-
   jmp fizzBuzzLoopEnd
+
+
 
 printFizz:
   mov     edx,fizzLength    
-  mov     ecx,fizz          
+  mov     ecx,fizz
   mov     ebx,1                 ; file handle (stdout)
   mov     eax,4                 ; sys_write
   int     0x80
-
   jmp fizzBuzzLoopEnd
+
+
 
 printBuzz:
   mov     edx,buzzLength    
@@ -67,15 +92,21 @@ printBuzz:
   mov     ebx,1                 ; file handle (stdout)
   mov     eax,4                 ; sys_write
   int     0x80
-
   jmp fizzBuzzLoopEnd
+
+
+
 
 section .data
 
-fizz            db "Fizz",0xa
-buzz            db "Buzz",0xa
-fizzbuzz        db "FizzBuzz",0xa
-
+fizz            db 'Fizz',0xa
 fizzLength      equ $ - fizz
+
+buzz            db 'Buzz',0xa
 buzzLength      equ $ - buzz
+
+fizzbuzz        db 'FizzBuzz',0xa
 fizzbuzzLength  equ $ - fizzbuzz
+
+mynum           db '[number]',0xa
+mynumLength     equ $ - mynum
