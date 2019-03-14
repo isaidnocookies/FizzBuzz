@@ -65,6 +65,41 @@ fizzBuzzLoopEnd:
 finishFizzBuzz:
   ret
 
+
+
+printFizzBuzz:
+
+  mov     edx,fizzbuzzLength    
+  mov     ecx,fizzbuzz          
+  mov     ebx,1                 ; file handle (stdout)
+  mov     eax,4                 ; sys_write
+  int     0x80
+  jmp fizzBuzzLoopEnd
+
+
+
+printFizz:
+
+  mov     edx,fizzLength    
+  mov     ecx,fizz
+  mov     ebx,1                 ; file handle (stdout)
+  mov     eax,4                 ; sys_write
+  int     0x80
+  jmp fizzBuzzLoopEnd
+
+
+
+printBuzz:
+
+  mov     edx,buzzLength    
+  mov     ecx,buzz          
+  mov     ebx,1                 ; file handle (stdout)
+  mov     eax,4                 ; sys_write
+  int     0x80
+  jmp fizzBuzzLoopEnd
+
+
+
 printIndex:
 
   mov     [myNumber], rax
@@ -81,37 +116,6 @@ printIndex:
   int     0x80
 
   jmp fizzBuzzLoopEnd
-
-
-
-printFizzBuzz:
-  mov     edx,fizzbuzzLength    
-  mov     ecx,fizzbuzz          
-  mov     ebx,1                 ; file handle (stdout)
-  mov     eax,4                 ; sys_write
-  int     0x80
-  jmp fizzBuzzLoopEnd
-
-
-
-printFizz:
-  mov     edx,fizzLength    
-  mov     ecx,fizz
-  mov     ebx,1                 ; file handle (stdout)
-  mov     eax,4                 ; sys_write
-  int     0x80
-  jmp fizzBuzzLoopEnd
-
-
-
-printBuzz:
-  mov     edx,buzzLength    
-  mov     ecx,buzz          
-  mov     ebx,1                 ; file handle (stdout)
-  mov     eax,4                 ; sys_write
-  int     0x80
-  jmp fizzBuzzLoopEnd
-
 
 
 section .data
