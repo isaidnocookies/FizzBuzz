@@ -109,6 +109,9 @@ printIndex:
   push    rax
   push    rsi
 
+  mov rbx, 1
+  mov [first], rbx
+
   cmp rdi, 0
   jg printIndexLoop
   cmp rdi, 0
@@ -137,17 +140,44 @@ printZero:
   jmp endPrintIndexLoop
 
 printIndexLoop:
-  mov rax, '1'  
-  mov [num], rax
-  mov rax, 4
-  mov rbx, 1
-  push rcx
+  mov rdx, index
+  mov rsi, largestMagnitude
+  div rsi
 
-  mov rcx, num        
-  mov rdx, 1        
-  int 0x80
+  cmp rdx, 0
+  jne printCharacter
+  mov rsi, largestMagnitude
+  mov [index], rdx
+  mov [char], rax
 
-  add rsp, 8
+printCharacter:
+  mov rax, char
+  mov rcx, '0'
+  add rcx, rax
+  mov     rdx,1
+  mov     rbx,1                 ; file handle (stdout)
+  mov     rax,4                 ; sys_write
+  int     0x80
+
+  mov rdx, index
+  mov rsi, 10
+  div rsi
+  mov [largestMagnitude], rax
+  cmp rax, 0
+  je endPrintIndexLoop
+  jmp printIndexLoop
+
+  ;mov rax, '1'
+  ;mov [num], rax
+  ;mov rax, 4
+  ;mov rbx, 1
+  ;push rcx
+
+  ;mov rcx, num        
+  ;mov rdx, 1        
+  ;int 0x80
+
+  ;add rsp, 8
 
 endPrintIndexLoop:
 
@@ -219,4 +249,6 @@ section .bss
   index resb 1
   lMag  resb 1
   num   resb 1
+  first resb 1
+  char  resb 1
 ;; ************************************************
