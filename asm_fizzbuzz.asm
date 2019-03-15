@@ -3,7 +3,6 @@ section .text
     global _start
 
 _start:
-
   mov rdi, 3                    ; Start of FizzBuzz range
   neg rdi                       ; Negate the start of the range
   mov rsi, 15                    ; End of the FizzBuzz range
@@ -16,6 +15,10 @@ _start:
 
 
 
+
+
+;; Print fizzbuzz......
+;; ************************************************
 fizzBuzz:
   cmp rdi, rsi
   jg finishFizzBuzz
@@ -93,8 +96,14 @@ printBuzz:
   mov     eax,4                 ; sys_write
   int     0x80
   jmp fizzBuzzLoopEnd
+;; ************************************************
 
 
+
+
+
+; function to print from rdi (the index from fizzbuzz)
+;; ************************************************
 printIndex:
   push    rdi
   push    rax
@@ -127,9 +136,8 @@ printZero:
   add rsp, 8
   jmp endPrintIndexLoop
 
-
 printIndexLoop:
-  mov rax, '1'
+  mov rax, '1'  
   mov [num], rax
   mov rax, 4
   mov rbx, 1
@@ -144,15 +152,20 @@ printIndexLoop:
 endPrintIndexLoop:
 
   call printNewline
+  
   pop rsi
   pop rax
   pop rdi
   
   ret
+;; ************************************************
 
 
 
 
+
+;; function to print a new line character to stdout
+;; ************************************************
 printNewline:
 
   push    rdx
@@ -170,8 +183,14 @@ printNewline:
   pop     rdx
   
   ret
+;; **********************************************
 
 
+
+
+
+;; Data section
+;; ************************************************
 section .data
 
   fizz              db 'Fizz',0xa
@@ -188,8 +207,16 @@ section .data
 
   largestMagnitude  equ 10000
   minusSign         db '-'
+;; ************************************************
 
+
+
+
+
+;; Statically allocated variables
+;; ************************************************
 section .bss
   index resb 1
   lMag  resb 1
   num   resb 1
+;; ************************************************
