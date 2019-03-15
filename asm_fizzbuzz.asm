@@ -5,7 +5,7 @@ section .text
 _start:
   mov rdi, 3                    ; Start of FizzBuzz range
   neg rdi                       ; Negate the start of the range
-  mov rsi, 15                    ; End of the FizzBuzz range
+  mov rsi, 0                    ; End of the FizzBuzz range
 
   call fizzBuzz                 ; You know...
 
@@ -102,7 +102,7 @@ printBuzz:
 
 
 
-; function to print from rdi (the index from fizzbuzz)
+;; function to print from rdi (the index from fizzbuzz)
 ;; ************************************************
 printIndex:
   push    rdi
@@ -126,58 +126,24 @@ printIndex:
   jmp printIndexLoop
 
 printZero:
-  mov rax, '0'
-  mov [num], rax
-  mov rax, 4
-  mov rbx, 1
-  push rcx
+  mov     rax, '0'
+  mov     [num], rax
+  mov     rax, 4
+  mov     rbx, 1
+  push    rcx
 
-  mov rcx, num        
-  mov rdx, 1        
-  int 0x80
-
-  add rsp, 8
-  jmp endPrintIndexLoop
-
-printIndexLoop:
-  mov rdx, index
-  mov rsi, largestMagnitude
-  div rsi
-
-  cmp rdx, 0
-  jne printCharacter
-  mov rsi, largestMagnitude
-  mov [index], rdx
-  mov [char], rax
-
-printCharacter:
-  mov rax, char
-  mov rcx, '0'
-  add rcx, rax
-  mov     rdx,1
-  mov     rbx,1                 ; file handle (stdout)
-  mov     rax,4                 ; sys_write
+  mov     rcx, num        
+  mov     rdx, 1        
   int     0x80
 
-  mov rdx, index
-  mov rsi, 10
-  div rsi
-  mov [largestMagnitude], rax
-  cmp rax, 0
-  je endPrintIndexLoop
-  jmp printIndexLoop
+  add     rsp, 8
+  jmp     endPrintIndexLoop
 
-  ;mov rax, '1'
-  ;mov [num], rax
-  ;mov rax, 4
-  ;mov rbx, 1
-  ;push rcx
+printIndexLoop:
+  ; TBD
 
-  ;mov rcx, num        
-  ;mov rdx, 1        
-  ;int 0x80
-
-  ;add rsp, 8
+printCharacter:
+  ; TBD
 
 endPrintIndexLoop:
 
